@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
 
 class Trainer(models.Model):
@@ -9,6 +10,7 @@ class Trainer(models.Model):
     dob = models.DateField(null=False)
     age = models.IntegerField(default=0)
     gender = models.CharField(max_length=10,choices=[('male','male'),('female','female'),('others','others')])
+    created_at = models.DateTimeField(auto_now_add=True)
     subscription = models.BooleanField(default= False)
 
     def __str__(self):
@@ -28,7 +30,7 @@ class Slots(models.Model):
         return f'{self.start_time}-{self.end_time}'
     
 
-class Trainer_data(models.Model):
+class TrainerData(models.Model):
     trainer = models.OneToOneField(Trainer,on_delete=models.CASCADE)
     certificate = models.FileField(null=False,upload_to="certificate_pdfs/")
     pricing = models.DecimalField(decimal_places=2,max_digits=5,null=False,blank=False)
@@ -47,12 +49,13 @@ class Trainer_data(models.Model):
 
 
 
-class Platform_user(models.Model):
+class PlatformUser(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='platform_user_profile')
     profile_image = models.ImageField(upload_to = 'profile_image/',null=True)
     phone_number = models.CharField( max_length=10,null=False,unique=True)
     dob = models.DateField(null=False)
     gender = models.CharField(max_length=10,choices=[('male','male'),('female','female'),('others','others')])
+    created_at = models.DateTimeField(auto_now_add=True)
     subscription = models.BooleanField(default= False)
 
     
@@ -67,31 +70,40 @@ class Goals(models.Model):
         return f'goals : {self.goals_provided}'
     
 
-class Bodytype(models.Model):
-    type = models.CharField(max_length=50)
-    def __str__(self):
-        return f'body type : {self.type}'
+
+BODY_TYPE_CHOICES = [
+    ('Ectomorph', 'Ectomorph'),
+    ('Endomorph', 'Endomorph'),
+    ('Mesomorph', 'Mesomorph'),
+    ('Pear or triangle', 'Pear or triangle'),
+    ('Inverted triangle', 'Inverted triangle'),
+    ('Rectangle', 'Rectangle'),
+    ('Hourglass', 'Hourglass'),
+    ('Oval or apple', 'Oval or apple'),
+]
+
     
-class BloodPressure(models.Model):
-    category = models.CharField(max_length=50,null=False,blank=False)
-    range = models.CharField(max_length=90,null=False,blank=False)
-    
-    def __str__(self):
-        return f'{self.category}:{self.range}'
+BLOOD_PRESSURE_CHOICES = [
+    ('Normal', 'LESS THAN 120	and	LESS THAN 80'),
+    ('Elevated', '120 - 129	and	LESS THAN 80'),
+    ('HIGH BLOOD PRESSURE (HYPERTENSION) STAGE 1', '130 - 139	or	80 - 89'),
+    ('HIGH BLOOD PRESSURE (HYPERTENSION) STAGE 2', '140 OR HIGHER	or	90 OR HIGHER'),
+    ('HYPERTENSIVE CRISIS (consult your doctor immediately)', 'HIGHER THAN 180	and/or	HIGHER THAN 120'),
+]
 
 
 
-class Platform_user_data(models.Model):
-    user = models.OneToOneField(Platform_user,on_delete=models.CASCADE)
+class PlatformUserData(models.Model):
+    user = models.OneToOneField(PlatformUser,on_delete=models.CASCADE)
     goal = models.ForeignKey(Goals,on_delete=models.CASCADE)
     height = models.DecimalField(decimal_places=2,max_digits=4,null=False,blank=False)
     weight = models.DecimalField(decimal_places=2,max_digits=4,null=False,blank=False)
-    Body_type = models.ForeignKey(Bodytype,on_delete=models.CASCADE)
-    blood_pressure = models.ForeignKey(BloodPressure,on_delete=models.CASCADE)
+    Body_type = models.CharField(max_length=50, choices=BODY_TYPE_CHOICES, blank=True)
+    blood_pressure = models.CharField(max_length=100, choices=BLOOD_PRESSURE_CHOICES, blank=True) 
     BMI = models.DecimalField(decimal_places=2,max_digits=5,null=False,blank=False)    
     
     def __str__(self):
-        return f'{self.user.first_name} {self.BMI}'
+        return f'{self.user.user.first_name} {self.BMI}'
     
     
 class Address(models.Model):

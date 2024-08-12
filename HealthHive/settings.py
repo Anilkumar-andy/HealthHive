@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-USER_APPS=['account']
+USER_APPS=[
+    'account',
+    'data',]
 
 INSTALLED_APPS=INSTALLED_APPS+USER_APPS
 
