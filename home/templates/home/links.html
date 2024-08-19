@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <p>
+    <a href="{% url 'register_trainer' %}">Register as Trainer </a>
+  </p>
+  <p>login
+    <a href="admin/">admin</a>
+  </p>
+  <p>Register<a href="{% url 'register_trainerData' current_trainer %}/">TrainerData</a></p>
+
+</div>
+
+{% endblock %}

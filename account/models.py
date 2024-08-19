@@ -11,6 +11,7 @@ class Trainer(models.Model):
     age = models.IntegerField(default=0)
     gender = models.CharField(max_length=10,choices=[('male','male'),('female','female'),('others','others')])
     created_at = models.DateTimeField(auto_now_add=True)
+    certificate = models.FileField(null=False,upload_to="certificate_pdfs/")
     subscription = models.BooleanField(default= False)
 
     def __str__(self):
@@ -26,13 +27,15 @@ class Slots(models.Model):
         constraints=[
             models.UniqueConstraint(fields=['start_time','end_time'],name='unique_time_slot' )
         ]
+        verbose_name = 'Slot'
+        # verbose_name_plural = 'Slot'
+
     def __str__(self):
         return f'{self.start_time}-{self.end_time}'
     
 
 class TrainerData(models.Model):
     trainer = models.OneToOneField(Trainer,on_delete=models.CASCADE)
-    certificate = models.FileField(null=False,upload_to="certificate_pdfs/")
     pricing = models.DecimalField(decimal_places=2,max_digits=5,null=False,blank=False)
     time_Slots_1 = models.ForeignKey(Slots,related_name='trainer_data_time_slots_1',on_delete=models.CASCADE,blank=False,null=False)
     time_Slots_2 = models.ForeignKey(Slots,related_name='trainer_data_time_slots_2',on_delete=models.CASCADE,blank=False,null=False)

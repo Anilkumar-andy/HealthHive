@@ -41,7 +41,9 @@ INSTALLED_APPS = [
 ]
 USER_APPS=[
     'account',
-    'data',]
+    'data',
+    'home',
+]
 
 INSTALLED_APPS=INSTALLED_APPS+USER_APPS
 
