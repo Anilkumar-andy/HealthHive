@@ -1,8 +1,13 @@
 from django.shortcuts import render,redirect,get_object_or_404,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from .forms import TrainerRegistrationForm,TrainerDataForm,PlatformUserForm,PlatformUserDataForm
+from .forms import *
 from .models import Trainer,PlatformUser
+from django.views import View
+from django.contrib import messages 
+from django.contrib.auth import authenticate,login,logout
+
+
 
 
 # Create your views here.
@@ -35,22 +40,6 @@ def registerTrainerData(request,username):
         else:
             return HttpResponse('form is not valid')
         
-def platformUserData(request,username):
-    if request.method == 'GET':
-        form = PlatformUserDataForm()
-        return render(request,'account/PLatformUserDataForm.html',{'form':form})
-    elif request.method == "POST":
-        form = PlatformUserDataForm(request.POST)
-        if form.is_valid():
-            print(form.errors)
-            platform_user_instance = get_object_or_404(PlatformUser,user__username=username)
-            platform_instance = form.save(commit=False)
-            platform_instance.platform_user= platform_user_instance
-            platform_instance.save()
-            return render(request,'account/success.html')
-        else:
-            return HttpResponse('form is not valid')
-        
         
 def register_platformUser(request):
     if request.method == "GET":
@@ -66,6 +55,10 @@ def register_platformUser(request):
             return render(request,'account/RegistrationForm.html')
 
 def platformUserData(request,username):
+    print(f'username is {username}')
+    platform_user_instance = get_object_or_404(PlatformUser,user__username=username)
+    print(f'platform_user_instance is {platform_user_instance}')
+
     if request.method == 'GET':
         form = PlatformUserDataForm()
         return render(request,'account/PLatformUserDataForm.html',{'form':form})
@@ -81,7 +74,38 @@ def platformUserData(request,username):
         else:
             return HttpResponse('form is not valid')
         
+
+class Login_User(View):
+    def get(self,request):
+        form = LoginUser_Form()
+        return render(request,'account/Login.html',{'form':form})
+    
+    def post(self,request):
+        form = LoginUser_Form(request.POST)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(form)
+
+        if not User.objects.filter(username=username).exists():
+            messages.error(request,"Invalid username!, Username doesn't exists.")
+            return redirect('/')
         
-
-
+        user = authenticate(username=username,password=password)
+        
+        if user is None :
+            messages.error(request,"Password is incorrect")
+            return render(request,'account/login.html',{'form':form})
+        
+        else:
+            login(request,user)
+            request.session['username']=user.username
+            messages.success(request,f"{user.username} is logged in, login Successful")
+            return render(request, 'account/success.html')
+        
+def logout_user(request):
+    user = request.session.get('username')
+    messages.success(request,f'logout Successful, bye bye {user}')
+    logout(request)
+    return redirect('/')
+    
         

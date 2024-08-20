@@ -80,3 +80,8 @@ class PlatformUserDataForm(forms.ModelForm):
         model = PlatformUserData
         exclude = ['platform_user']
     
+    
+    
+class LoginUser_Form(forms.Form):
+    username = forms.CharField(max_length=50)
+    password = forms.CharField(max_length=60, widget=forms.PasswordInput)
