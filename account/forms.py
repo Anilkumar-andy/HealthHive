@@ -43,6 +43,12 @@ class TrainerDataForm(forms.ModelForm):
         model = TrainerData
         exclude = ['verification','trainer']
     field_order =['pricing','time_Slots_1','time_Slots_2','time_Slots_3','time_Slots_4','time_Slots_5','time_Slots_6','time_Slots_7']
+
+
+class PlatformUserDataForm(forms.ModelForm):
+    class Meta:
+        model = PlatformUserData
+        exclude = ['platform_user']
     
 
 class PlatformUserForm(forms.ModelForm):
@@ -64,5 +70,13 @@ class PlatformUserForm(forms.ModelForm):
         PlatformUser = super().save(commit=False)
         PlatformUser.user = user
         if commit:
+            PlatformUser.user.save()
             PlatformUser.save()
         return PlatformUser 
+    
+
+class PlatformUserDataForm(forms.ModelForm):
+    class Meta:
+        model = PlatformUserData
+        exclude = ['platform_user']
+    

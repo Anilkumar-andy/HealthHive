@@ -57,6 +57,7 @@ class PlatformUser(models.Model):
     profile_image = models.ImageField(upload_to = 'profile_image/',null=True)
     phone_number = models.CharField( max_length=10,null=False,unique=True)
     dob = models.DateField(null=False)
+    age = models.IntegerField(null=False,blank=False)
     gender = models.CharField(max_length=10,choices=[('male','male'),('female','female'),('others','others')])
     created_at = models.DateTimeField(auto_now_add=True)
     subscription = models.BooleanField(default= False)
@@ -97,7 +98,7 @@ BLOOD_PRESSURE_CHOICES = [
 
 
 class PlatformUserData(models.Model):
-    user = models.OneToOneField(PlatformUser,on_delete=models.CASCADE)
+    platform_user = models.OneToOneField(PlatformUser,on_delete=models.CASCADE)
     goal = models.ForeignKey(Goals,on_delete=models.CASCADE)
     height = models.DecimalField(decimal_places=2,max_digits=4,null=False,blank=False)
     weight = models.DecimalField(decimal_places=2,max_digits=4,null=False,blank=False)
@@ -106,7 +107,7 @@ class PlatformUserData(models.Model):
     BMI = models.DecimalField(decimal_places=2,max_digits=5,null=False,blank=False)    
     
     def __str__(self):
-        return f'{self.user.user.first_name} {self.BMI}'
+        return f'{self.platform_user.user.first_name} {self.BMI}'
     
     
 class Address(models.Model):

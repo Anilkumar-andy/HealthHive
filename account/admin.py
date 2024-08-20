@@ -4,3 +4,6 @@ from .models import *
 admin.site.register(Trainer)
 admin.site.register(Slots)
 admin.site.register(TrainerData)
+admin.site.register(Goals)
+admin.site.register(PlatformUser)
+admin.site.register(PlatformUserData)

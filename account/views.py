@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,redirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
-from .forms import TrainerRegistrationForm,TrainerDataForm
-from .models import Trainer
+from .forms import TrainerRegistrationForm,TrainerDataForm,PlatformUserForm,PlatformUserDataForm
+from .models import Trainer,PlatformUser
 
 
 # Create your views here.
@@ -31,7 +32,56 @@ def registerTrainerData(request,username):
             trainer_instance.trainer = trainer_user
             trainer_instance.save()
             return render(request,'account/success.html')
+        else:
+            return HttpResponse('form is not valid')
+        
+def platformUserData(request,username):
+    if request.method == 'GET':
+        form = PlatformUserDataForm()
+        return render(request,'account/PLatformUserDataForm.html',{'form':form})
+    elif request.method == "POST":
+        form = PlatformUserDataForm(request.POST)
+        if form.is_valid():
+            print(form.errors)
+            platform_user_instance = get_object_or_404(PlatformUser,user__username=username)
+            platform_instance = form.save(commit=False)
+            platform_instance.platform_user= platform_user_instance
+            platform_instance.save()
+            return render(request,'account/success.html')
+        else:
+            return HttpResponse('form is not valid')
         
         
+def register_platformUser(request):
+    if request.method == "GET":
+        form =  PlatformUserForm()
+        return render(request,'account/RegistrationForm.html',{'form':form})
+    elif request.method == "POST":
+        form = PlatformUserForm(request.POST,request.FILES)
+        if form.is_valid():
+            user_instance = form.save()
+            current_platformUser= user_instance.user.username
+            return redirect('register_PlatformUserData',current_platformUser)          
+        else :
+            return render(request,'account/RegistrationForm.html')
+
+def platformUserData(request,username):
+    if request.method == 'GET':
+        form = PlatformUserDataForm()
+        return render(request,'account/PLatformUserDataForm.html',{'form':form})
+    elif request.method == "POST":
+        form = PlatformUserDataForm(request.POST)
+        if form.is_valid():
+            print(form.errors)
+            platform_user_instance = get_object_or_404(PlatformUser,user__username=username)
+            platform_instance = form.save(commit=False)
+            platform_instance.platform_user= platform_user_instance
+            platform_instance.save()
+            return render(request,'account/success.html')
+        else:
+            return HttpResponse('form is not valid')
         
-def 
+        
+
+
+        
