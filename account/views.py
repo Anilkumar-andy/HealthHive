@@ -64,6 +64,8 @@ def platformUserData(request,username):
         return render(request,'account/PLatformUserDataForm.html',{'form':form})
     elif request.method == "POST":
         form = PlatformUserDataForm(request.POST)
+        print(form)
+        print(f'{form.errors} and {form.is_valid()}') # 
         if form.is_valid():
             print(form.errors)
             platform_user_instance = get_object_or_404(PlatformUser,user__username=username)

@@ -78,7 +78,7 @@ class PlatformUserForm(forms.ModelForm):
 class PlatformUserDataForm(forms.ModelForm):
     class Meta:
         model = PlatformUserData
-        exclude = ['platform_user']
+        exclude = ['platform_user','']
     
     
     

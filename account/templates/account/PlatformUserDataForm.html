@@ -1,8 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<!-- <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form> -->
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        {{form.goal.label}}
+        {{form.goal}}
+    </div>
+    <div>
+        {{form.height.label}}
+        {{form.height}} 
+    </div>
+    <div>
+        {{form.weight.label}}
+        {{form.weight}}
+    </div>
+    <div>
+        {{form.Body_type.label}}
+        {{form.Body_type}}
+    </div>
+    <div>
+        {{form.blood_pressure.label}}
+        {{form.blood_pressure}}
+    </div>
+    <div>
+        {{form.BMI.label}}
+        {{form.BMI}}
+    </div>
     <button type="submit">Submit</button>
 </form>
 {% endblock %}
