@@ -2,8 +2,7 @@ from django.db import models
 from account.models import Trainer,PlatformUser
 
 # Create your models here.
-
-class video(models.Model):
+class Video(models.Model):
     user= models.ForeignKey(Trainer,on_delete=models.CASCADE)
     video = models.FileField(upload_to='videos/',null=False,blank=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -24,7 +23,7 @@ class Image(models.Model):
         return self.title
     
 class VideoReview(models.Model):
-    video= models.ForeignKey(video,on_delete=models.CASCADE)
+    video= models.ForeignKey(Video,on_delete=models.CASCADE)
     user = models.ForeignKey(PlatformUser,on_delete=models.CASCADE)
     review = models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
