@@ -33,7 +33,8 @@ class VideoReview(models.Model):
         return f'{self.video.title} - {self.review[:20]}'
 
 class CustomPlans(models.Model):
-    user = models.ForeignKey(PlatformUser,on_delete=models.CASCADE)
+    user = models.ForeignKey(Trainer,on_delete=models.CASCADE)
+    uploaded_for =models.ForeignKey(PlatformUser,on_delete=models.CASCADE,default=None)
     plan_pdf = models.FileField(upload_to='plans/',null=False,blank=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.contrib.auth.models import Permission
+# Ensure 'is_trainer' permission is correctly set up
+
 # Create your models here.
 
 class Trainer(models.Model):
@@ -13,6 +16,11 @@ class Trainer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     certificate = models.FileField(null=False,upload_to="certificate_pdfs/")
     subscription = models.BooleanField(default= False)
+    
+    class Meta:
+        permissions =[
+            ('is_trainer','Is trainer')
+        ]
 
     def __str__(self):
         return self.user.username 
@@ -61,6 +69,11 @@ class PlatformUser(models.Model):
     gender = models.CharField(max_length=10,choices=[('male','male'),('female','female'),('others','others')])
     created_at = models.DateTimeField(auto_now_add=True)
     subscription = models.BooleanField(default= False)
+    
+    class Meta:
+        permissions =[
+            ('is_platform_user','Is platform user')
+        ]
 
     
     def __str__(self):
