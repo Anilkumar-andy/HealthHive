@@ -86,7 +86,6 @@ class Login_User(View):
         form = LoginUser_Form(request.POST)
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(form)
 
         if not User.objects.filter(username=username).exists():
             messages.error(request,"Invalid username!, Username doesn't exists.")

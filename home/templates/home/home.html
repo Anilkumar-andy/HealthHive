@@ -3,5 +3,22 @@
 {% block content %}
 
 <h1>home page</h1>
+<h3>
+    <div class="urls"><a href="{% url 'register_trainer' %}">register_trainer</a></div>
+    <div class="urls"><a href="{% url 'register_platform_user'  %}">register_platform_user</a></div>
+    {% comment %} <div class="urls"><a href="{% url 'register_trainerData' current_trainer %}"></a></div>
+    <div class="urls"><a href="{% url 'register_platformUserData' current_platformUser %}"></a></div> {% endcomment %}
+    <div class="urls"><a href="{% url 'Login_User_' %}">login</a></div>
+    <div class="urls"><a href="{% url 'logout_user_' %}">logout</a></div>
+    <div class="urls"><a href="{% url 'add_video_' %}">add_video</a></div>
+    <div class="urls"><a href="{% url 'add_image_' %}">add image</a></div>
+    {% comment %} <div class="urls"><a href="{% url 'video_review_' %}">video review</a></div> {% endcomment %}
+    <div class="urls"></div>
+    <div class="urls"></div>
+    <div class="urls"></div>
+    <div class="urls"></div>
+    <div class="urls"></div>
+</h3>
+
 
 {% endblock %}
