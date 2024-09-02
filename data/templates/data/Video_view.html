@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+{%for d in data %}
+<div class="card" style="width: 18rem;">
+    <img src="{{d.video.url}}" class="card-img-top" alt="...">
+    <video  controls autoplay play pause loop muted>
+    <source src="{{d.video.url}}" type="video/mp4"></video>
+    <div class="card-body">
+      <h5 class="card-title">{{d.title}}</h5>
+      <p class="card-text">{{d.description}}</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

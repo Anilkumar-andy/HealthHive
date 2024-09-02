@@ -120,7 +120,7 @@ class PlatformUserData(models.Model):
     BMI = models.DecimalField(decimal_places=2,max_digits=5,null=False,blank=False)    
     
     def __str__(self):
-        return f'{self.platform_user.user.first_name} {self.BMI}'
+        return f'{self.platform_user.user.first_name} has BMI:- {self.BMI}'
     
     
 class Address(models.Model):

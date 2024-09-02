@@ -21,8 +21,12 @@ class VideoReview_form(forms.ModelForm):
 class CustomPlans_form(forms.ModelForm):
     class Meta:
         model = CustomPlans
-        fields = ['uploaded_for','week','from_date','to_date']
+        fields = ['uploaded_for_user','week','plan_pdf','from_date','to_date']
+        widgets = {
+            'from_date':forms.DateInput(attrs={'type':'date'}),
+            'to_date':forms.DateInput(attrs={'type':'date'})
+        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['uploaded_for'].queryset=PlatformUser.objects.filter(subscription=True)
+        self.fields['uploaded_for_user'].queryset=PlatformUser.objects.filter(subscription=True)

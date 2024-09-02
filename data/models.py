@@ -33,8 +33,8 @@ class VideoReview(models.Model):
         return f'{self.video.title} - {self.review[:20]}'
 
 class CustomPlans(models.Model):
-    user = models.ForeignKey(Trainer,on_delete=models.CASCADE)
-    uploaded_for =models.ForeignKey(PlatformUser,on_delete=models.CASCADE,default=None)
+    trainer = models.ForeignKey(Trainer,on_delete=models.CASCADE)
+    uploaded_for_user =models.ForeignKey(PlatformUser,on_delete=models.CASCADE,default=None)
     plan_pdf = models.FileField(upload_to='plans/',null=False,blank=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -42,8 +42,15 @@ class CustomPlans(models.Model):
     status = models.BooleanField(default=False)
     from_date = models.DateField()
     to_date = models.DateField()
-    class meta:
+    class Meta:
         constraints =[
-            models.UniqueConstraint(fields=['from_date','to_date','user'],name='unique_date')
+            models.UniqueConstraint(fields=['trainer','uploaded_for_user','from_date','to_date'],name='unique_date_trainer'),
+            models.UniqueConstraint(fields=['uploaded_for_user','week'],name='unique_data_user')
         ]
+        # unique_together = [('trainer','from_date','to_date'),
+        #                    ('uploaded_for_user','week'),
+        #                    ]
+       
+    def __str__(self):
+        return f'plan for {self.uploaded_for_user.user} of week {self.week}'
     
