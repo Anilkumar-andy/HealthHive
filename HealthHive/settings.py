@@ -43,6 +43,8 @@ USER_APPS=[
     'account',
     'data',
     'home',
+    'subscription',
+    'ckeditor'
 ]
 
 INSTALLED_APPS=INSTALLED_APPS+USER_APPS
