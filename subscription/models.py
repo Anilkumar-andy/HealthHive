@@ -65,13 +65,7 @@ class PaymentRecord(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=12)
     status = models.CharField(choices=PAYMENT_STATUS_CHOICE, max_length=20, default='pending')
     method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICE)
-
-    subscribed_trainer = models.ForeignKey(SubscribedTrainer, on_delete=models.DO_NOTHING, null=True, blank=True)
-    hired_trainer = models.ForeignKey(HireTrainer, on_delete=models.DO_NOTHING, null=True, blank=True)
-
+    
     def __str__(self):
         return f'Payment {self.payment_id} by {self.user.username}'
 
-
-    
-    
