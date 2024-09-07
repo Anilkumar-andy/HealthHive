@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Buy Subscription Details</h2>
+<div class="container bs-5">
+    <p>Trainer Name:- {{subscriber_info.trainer.user.username}}</p>
+    <p>Subscription Plan:- {{subscriber_info.plan.name}}</p>
+    <P>Subscription Price:-{{subscriber_info.plan.price}}</P>
+    <p>Duration:-{{subscriber_info.plan.get_duration_display}}</p>
+    <P>Payment Mode:-Razor pay</P>
+    <form method="post" action="{% url 'buy_subscription' subscriber_info.plan.id %}">
+        {% csrf_token %}
+        <button type="submit">Pay with Razor Pay</button>
+    </form>
+
+</div>
+{% endblock %}
+
+

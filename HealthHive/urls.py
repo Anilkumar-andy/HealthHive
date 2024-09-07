@@ -25,6 +25,7 @@ urlpatterns = [
     path('account/',include('account.urls')),
     path('',include('home.urls')),
     path('data/',include('data.urls')),
+    path('Subscription/',include('subscription.urls'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

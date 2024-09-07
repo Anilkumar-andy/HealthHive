@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block add_css %}
+{% load static %}
+<link href="{% static 'subscription\css\subscription_plan.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block content %}
+<div class = "card_body">
+    <h1>Choose the plan that fits for your team</h1>
+    <p>
+      Deploy your sites to global infrastructure in seconds. No credit card
+      required
+    </p>
+
+    <div class="pricing row">
+      {% for plan in plans %}
+      <div class="plan col">
+        <h2 class="plan_name">{{plan.name}}</h2>
+        <div class="price">{{plan.price}}</div>
+        <p class="duration">{{plan.get_duration_display}}</p>
+        <ul class="features">
+          
+          <li>{{plan.features|safe}}</li>
+        </ul>
+        <a href="{% url 'buy_subscription' plan.id %}">
+          <button type="submit">BUY</button>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
