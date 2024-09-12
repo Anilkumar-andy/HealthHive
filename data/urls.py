@@ -10,4 +10,10 @@ urlpatterns = [
     path('custom_plans/',Custom_plans.as_view(),name='custom_plans_'),
     path('view_video/',View_Data_Video.as_view(),name='view_video_'),
     path('view_detail_video/<int:video_id>/',View_Detail_Video.as_view(),name='view_detail_video_'),
+    path('view_data/',All_data_search.as_view(),name='view_data_'),
+    path('save_data/image/<int:image_id>/',save_data,name='save_data_image_'),
+    path('save_data/video/<int:video_id>/',save_data,name='save_data_video_'),
+    path('view_save_data/',saved_data_view,name='view_save_data_'),
+    path('delete_saved_data/img/<int:image_id>/',delete_saved_data,name='delete_saved_data_image_'),
+    path('delete_saved_data/video/<int:video_id>/', delete_saved_data, name='delete_saved_data_video_'),
 ]

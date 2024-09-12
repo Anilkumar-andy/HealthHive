@@ -1,0 +1,62 @@
+    {% extends "base.html" %}
+    {% load static %}
+
+    {% block add_css %}
+    <link href="{% static 'data\css\all_data.css' %}" rel="stylesheet">
+    {% endblock %}
+
+    {% block content %}
+
+    <div class=" d-flex justify-content-center align-items-center  search_box_custom">
+        <form method="POST" id="searchForm">
+            {% csrf_token %}
+            <input type="text" class="p-2" name="search_data" placeholder="Search...">
+            <button class="btn btn-dark btn-outline-warning p-2" type="submit">Search</button>
+        </form>
+    </div>
+
+
+
+
+    <div class="video_card_container"> 
+    {% if videos  %}
+        {% for video_ in videos %}
+        <div class="video_card" >
+            <video class="video_player" controls autoplay play pause loop muted>
+                <source src="{{video_.video.url}}" type="video/mp4">
+            </video>
+            <div class="card-body">
+            <h5 class="card-title">{{video_.title}}</h5>
+            <h5 class="card-title">{{video_.id}}</h5>
+            <p class="card-text">{{video_.description}}</p>
+
+            <form method="POST" action="{% url 'save_data_video_' video_.id %}">
+                {% csrf_token %}
+                <button  class="btn btn-primary transparent-btn">save
+                </button>
+            </form>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+
+    <div class="image_card_container">
+        {% if images %}
+            {% for image_ in images %}
+                <div class="image_card">
+                    <div class="image_wrapper">
+                        <img src="{{image_.image.url}}" class="card-img-top" alt="...">
+                        <form method="POST" action="{% url 'save_data_image_' image_.id %}">
+                            {% csrf_token %}
+                            <button  class="btn btn-primary transparent-btn">save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    {% endblock %}

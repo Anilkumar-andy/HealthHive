@@ -1,0 +1,49 @@
+
+{% load static %}
+<nav class=" navbar navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 border-bottom border-dark">
+  <div class="container">
+    <a class="navbar-brand  fw-bold" href="/">
+      <img src="{% static '\logo\healthhivelogo.png' %}" alt="Healthhive Logo" class="logo" height="40">
+      <i class="fab fa-mdb fa-4x">Healthhive</i></a>
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_data_'%}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'subscription_plans'%}">Membership</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!">search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'Login_User_'%}">Sign In</a>
+        </li>
+        <li>
+          <a class="nav-link" href="{% url 'register_platform_user' %}">
+            <button type="button" class="btn btn-dark ms-3">Get Started</button>
+          </a>
+        </li>
+          
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<script>
+  // JavaScript to change the navbar style on scroll
+  window.onscroll = function() {
+      var navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+          navbar.classList.add('navbar-scrolled');
+      } else {
+          navbar.classList.remove('navbar-scrolled');
+      }
+  };
+</script>

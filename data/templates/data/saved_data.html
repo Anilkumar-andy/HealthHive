@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block add_css %}
+<link href="{% static 'data\css\all_data.css' %}" rel="stylesheet">
+<link href="{% static 'data\css\saved_data.css' %}" rel="stylesheet">
+{% endblock %} 
+
+{% block content %}
+
+<div class=" d-flex justify-content-center align-items-center  search_box_custom">
+    <form method="POST" id="searchForm">
+        {% csrf_token %}
+        <input type="text" class="p-2" name="search_data" placeholder="Search...">
+        <button class="btn btn-dark btn-outline-warning p-2" type="submit">Search</button>
+    </form>
+</div>
+
+
+{% for d in data%}
+<div class=""> 
+{% if d.video  %}
+    <div class="row">
+        <div class="col-5">
+            <video class="video_player_saved" controls autoplay play pause loop muted>
+                <source src="{{d.video.video.url}}" type="video/mp4">
+            </video>
+        </div>
+        <div class="col-5">
+            <div class="saved-body">
+                <h5 class="saved-title">{{d.video.title}}</h5>
+                {% if d.video.description %}
+                <h6 class="saved-title">Description:</h6>
+                <p class="saved-text" >{{d.video.description}}</p>
+                {%endif%}                
+                <p class="saved-text" > Posted on: {{d.video.uploaded_at}}</p>
+                <div class="button-container">
+                    <form style="display: inline-block;" method="POST" action="{% url 'delete_saved_data_video_' d.video.id %}" >
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            Remove
+                        </button>
+                    </form>
+                    <button>
+                        <a target="_blank" class="btn" href="{{d.video.video.url}}"> open in fullscreen </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+</div>
+
+<div class="">
+ 
+    {% if d.image %}
+            <div class="row">
+                <div class="col-4">
+                    <img src="{{d.image.image.url}}" class="saved-img-top" alt="...">
+                </div>
+                <div class="col-7">
+                    <div class="saved-body">
+                        <h5 class="saved-title" >{{d.image.title}}</h5>
+                        {% if d.image.description %}
+                        <h6>Description</h6>
+                        <p class="saved-text" >{{d.image.description}}</p>
+                        {%endif%}
+                        <p class="saved-text" > Posted on: {{d.image.uploaded_at}}</p>
+                        <div class="button-container">
+                            <form style="display: inline-block;" method="POST" action="{% url 'delete_saved_data_image_' d.image.id %}" >
+                                {% csrf_token %}
+                                <input hidden type="text" id="media_type" value="_image_">
+                                <button type="submit" class="btn">
+                                    Remove
+                                </button>
+                            </form>
+                            <button>
+                                <a target="_blank" class="btn" href="{{d.image.image.url}}"> open in fullscreen </a>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+</div>
+
+{%endfor%}
+
+
+{% endblock %}

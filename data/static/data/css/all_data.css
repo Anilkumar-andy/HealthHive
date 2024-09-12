@@ -1,0 +1,131 @@
+body{
+    background-color: black;
+}
+
+
+
+.video_card_container {
+    display: flex;
+    flex-wrap: wrap; /* Allows cards to wrap when necessary */
+    gap: 20px; /* Space between the cards */
+    justify-content: left; /* Ensure even distribution across the row */
+    .video_card {
+        flex: 0 0 30%; /* Each card takes up exactly 20% of the screen width */
+        margin: 10px;
+        display: inline-block;
+        flex-direction: column; /* Stack video and text vertically */
+        border: 1px solid #FFC017;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px #FFC017;
+        overflow: hidden;
+        .video_player {
+            width: 100%; /* Video stretches to full width of its card */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .card-body {
+            padding: 15px;
+            text-align: center;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .card-text {
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color:#FFC017;
+            color: black;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn :hover{
+            background-color: rgb(131, 129, 9);
+            color: white;
+        }
+        
+    }
+    
+}
+
+
+/* Parent container for image cards */
+.image_card_container {
+    display: flex;
+    flex-wrap: wrap; /* Allows cards to wrap if necessary */
+    gap: 20px; /* Space between cards */
+        .image_card {
+        flex: 0 0 20%; /* Each card takes up 20% of the available width */
+        max-width: 300px; /* Same max width to keep consistency */
+        height: 400px; /* Fixed height to keep all cards uniform */
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px #FFC017;
+        overflow: hidden;
+        text-align: center;
+        position: relative; /* Required for absolute positioning of the button */
+        .image_wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            .card-img-top {
+                width: 100%;
+                height: 100%; /* Image should take the full height of the card */
+                object-fit: cover; /* Ensure the image fits well without distortion */
+            }
+            .transparent-btn {
+                position: absolute;
+                top: 50%; /* Vertical position (center) */
+                left: 50%; /* Horizontal position (center) */
+                transform: translate(-50%, -50%); /* To center the button perfectly */
+                padding: 10px 20px;
+                background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                border: none;
+                transition: background-color 0.3s ease; /* Smooth transition on hover */
+            }
+            .transparent-btn:hover {
+                background-color: rgba(0, 0, 0, 0.8); /* Slightly darker background on hover */
+                color: #fff; /* Ensure the text remains white */
+            }
+        }
+        
+    }
+}
+
+
+.video_card, .image_card {
+    min-height: 400px; /* Ensure consistent height */
+    width: 20%; /* Adjust width as needed */
+    border: 1px solid #FFC017;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #FFC017;
+    overflow: hidden;
+    text-align: center;
+}
+
+.search_box_custom {
+    padding: 20px 0 20px 0;
+    input{
+        background-color: #282828;
+        width: 700px;
+        border-radius: 10px;
+        border-color: #FFC017;
+        /* border-style: dashed; */
+        color: #FFC017;
+        
+    }
+}

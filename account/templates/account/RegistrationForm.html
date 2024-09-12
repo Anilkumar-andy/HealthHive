@@ -1,8 +1,16 @@
 {% extends "base.html" %}
+{% load static %}
+{% block add_css %}
+<link href="{% static 'account\css\register_form.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
+<h2>Register</h2>
+<div class="form-container mx-auto">
+    <form class="form-center" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Submit</button>
+        <button type="submit" class="submit-btn btn btn-warning " >Submit</button>
     </form>
+</div>
 {% endblock %}

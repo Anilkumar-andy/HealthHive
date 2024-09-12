@@ -1,5 +1,7 @@
 from django.db import models
 from account.models import Trainer,PlatformUser
+from account.models import Goals
+
 
 # Create your models here.
 class Video(models.Model):
@@ -8,7 +10,7 @@ class Video(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=25,null=False,blank=False)
     description = models.TextField(null=True,blank=True)
-
+    category = models.ForeignKey(Goals,on_delete=models.DO_NOTHING)
     def __str__(self):
         return self.title
     
@@ -18,6 +20,7 @@ class Image(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=25,null=False,blank=False)
     description = models.TextField(null=True,blank=True)
+    category = models.ForeignKey(Goals,on_delete=models.DO_NOTHING)
     
     def __str__(self):
         return self.title
@@ -54,3 +57,10 @@ class CustomPlans(models.Model):
     def __str__(self):
         return f'plan for {self.uploaded_for_user.user} of week {self.week}'
     
+
+class SavedData(models.Model):
+    user = models.ForeignKey(PlatformUser,on_delete=models.CASCADE)
+    video = models.ForeignKey(Video,on_delete=models.CASCADE,null=True,blank=True)
+    image = models.ForeignKey(Image,on_delete=models.CASCADE, null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
