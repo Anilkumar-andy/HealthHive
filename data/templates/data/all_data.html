@@ -19,8 +19,8 @@
 
 
     <div class="video_card_container"> 
-    {% if videos  %}
-        {% for video_ in videos %}
+    {% if data.videos  %}
+        {% for video_ in data.videos %}
         <div class="video_card" >
             <video class="video_player" controls autoplay play pause loop muted>
                 <source src="{{video_.video.url}}" type="video/mp4">
@@ -42,8 +42,8 @@
     </div>
 
     <div class="image_card_container">
-        {% if images %}
-            {% for image_ in images %}
+        {% if data.images %}
+            {% for image_ in data.images %}
                 <div class="image_card">
                     <div class="image_wrapper">
                         <img src="{{image_.image.url}}" class="card-img-top" alt="...">

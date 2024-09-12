@@ -107,32 +107,40 @@ Views for PLATFORM USER
 '''
 
 
-class All_data_search(View):
-    
-    def get(self,request):
-        videos=Video.objects.all()
-        images=Image.objects.all()
-        data={
-            'videos':videos,
-            'images':images
-        }
-        return render(request,'data/all_data.html',data)
-    def post(self,request):
-        search_term=request.POST.get('search_data')
-        print(search_term)
-        videos_title=Video.objects.filter(title__icontains=search_term)
-        images_title=Image.objects.filter(title__icontains=search_term)
+
+def search_data(request):
+    search_term=request.POST.get('search_data')
+    print(search_term)
+    videos_title=Video.objects.filter(title__icontains=search_term)
+    images_title=Image.objects.filter(title__icontains=search_term)
         
-        data={
-            'videos':videos_title,
-            'images':images_title
-        }
-        return render(request,'data/all_data.html',data)
+    data={
+        'videos':videos_title,
+        'images':images_title
+    }
+    return data
         
 class View_Data_Video(View):
     def get(self,request):
-        data=Video.objects.all()
-        return render (request,'data/data.html',{'data':data})
+        videos=Video.objects.all()
+        data={
+            'videos':videos
+        }
+        return render (request,'data/all_data.html',{'data':data})
+    def post(self,request):
+        data=search_data(request)
+        return render(request,'data/all_data.html',{'data':data})
+        
+class View_Data_Image(View):
+    def get(self,request):
+        images=Image.objects.all()
+        data={
+            'images':images
+        }
+        return render (request,'data/all_data.html',{'data':data})
+    def post(self,request):
+        data=search_data(request)
+        return render(request,'data/all_data.html',{'data':data})
     
 class View_Detail_Video(PlatformUserRequiredMixin,View):
     def get(self,request,video_id):
