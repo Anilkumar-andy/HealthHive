@@ -64,7 +64,7 @@ class PlatformUserForm(forms.ModelForm):
         widgets = {
             'dob' :forms.DateInput(attrs={'type':'date'})
         }
-    
+    field_order=['username','email','first_name','last_name','phone_number','dob','age','gender',]
     def save(self,commit=True):
         user = CreateUser(self)
         PlatformUser = super().save(commit=False)

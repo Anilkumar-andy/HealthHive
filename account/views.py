@@ -28,7 +28,7 @@ def registerTrainerData(request,username):
     print(username)
     if request.method == "GET":
         form = TrainerDataForm()
-        return render(request,'account/TrainerDataRegistration.html',{'form':form})
+        return render(request,'account/RegistrationForm.html',{'form':form})
     elif request.method == "POST": 
         form = TrainerDataForm(request.POST)
         if form.is_valid():
@@ -61,7 +61,7 @@ def platformUserData(request,username):
 
     if request.method == 'GET':
         form = PlatformUserDataForm()
-        return render(request,'account/PLatformUserDataForm.html',{'form':form})
+        return render(request,'account/RegistrationForm .html',{'form':form})
     elif request.method == "POST":
         form = PlatformUserDataForm(request.POST)
         print(form)

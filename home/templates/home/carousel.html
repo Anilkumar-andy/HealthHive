@@ -1,0 +1,48 @@
+{% load static %}
+<div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        {% for t in total %}
+        <li
+            data-bs-target="#carouselId"
+            data-bs-slide-to="{{t}}"
+            class="active"
+          aria-current="true" 
+            aria-label="First slide"
+        ></li>
+        {% endfor %}
+           </ol> 
+    <div class="carousel-inner" role="listbox">
+        {% for carousel_img in img_c %}
+        <div class="carousel-item active">
+            <img
+                src="{{carousel_img.image.url}}"
+                class="w-100 d-block"
+                alt="First slide"
+            />
+            <div class="carousel-caption d-none d-md-block">
+                <h3>{{carousel_img.title | safe }}</h3>
+                <p>{{carousel_img.description | safe}}</p>
+            </div>
+        </div>
+        {% endfor %}
+       
+    </div>
+    <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselId"
+        data-bs-slide="prev"
+    >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselId"
+        data-bs-slide="next"
+    >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
