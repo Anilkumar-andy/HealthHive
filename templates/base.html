@@ -32,8 +32,13 @@
     }
     </style>
 
+    
+
+    <link href="{% static 'data\css\all_data.css' %}" rel="stylesheet">
+
     {% block add_css %}
     {% endblock %}
+
 
 </head>
 <body >
@@ -68,9 +73,74 @@
 
 
       {% include 'home/carousel.html' %}
+
+
+
+
+
+
+
+
+
+      {% if videos  %}
+      <a href="{% url 'view_video_' %}" class ="custom_link_data"><h2>Videos</h2></a>
+      <div class="video_card_container"> 
+            {% for video_ in videos %}
+            <div class="video_card" >
+                <video class="video_player" controls autoplay play pause loop muted>
+                    <source src="{{video_.video.url}}" type="video/mp4">
+                </video>
+                <div class="card-body">
+                <h5 class="card-title">{{video_.title}}</h5>
+                <h5 class="card-title">{{video_.id}}</h5>
+                <p class="card-text">{{video_.description}}</p>
+    
+                <form method="POST" action="{% url 'save_data_video_' video_.id %}">
+                    {% csrf_token %}
+                    <button  class="btn btn-primary transparent-btn">save
+                    </button>
+                </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+
+        {% if images %}
+        <a href="{% url 'view_image_' %}" class ="custom_link_data"><h2>Images</h2></a>
+        <div class="image_card_container">
+                {% for image_ in images %}
+                    <div class="image_card">
+                        <div class="image_wrapper">
+                            <img src="{{image_.image.url}}" class="card-img-top" alt="...">
+                            <form method="POST" action="{% url 'save_data_image_' image_.id %}">
+                                {% csrf_token %}
+                                <button  class="btn btn-primary transparent-btn">save
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+
+
+
+      
+
+
+
+
     
       {% block content %}
       {% endblock %}
+
+
+
+
+
+
 
 
 
