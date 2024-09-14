@@ -84,7 +84,9 @@ class Login_User(View):
     
     def post(self,request):
         form = LoginUser_Form(request.POST)
+        print(form)
         username = request.POST.get('username')
+        print("========>",username)
         password = request.POST.get('password')
 
         if not User.objects.filter(username=username).exists():
@@ -101,7 +103,10 @@ class Login_User(View):
             login(request,user)
             request.session['username']=user.username
             messages.success(request,f"{user.username} is logged in, login Successful")
-            return render(request, 'account/success.html')
+            next_url = request.GET.get('next')  
+            if next_url:
+                return redirect(next_url) 
+            return redirect('/')
         
 def logout_user(request):
     user = request.session.get('username')

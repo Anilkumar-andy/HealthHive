@@ -1,8 +1,38 @@
 {% extends "base.html" %}
+{% load static %}
+{% block add_css %}
+<link href="{% static 'account\css\login_page.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+
+    <div class="form-wrapper">
+        <h2>Sign In</h2>
+        <form method="post" >
+            {% csrf_token  %}
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
+
+
+            <div class="form-control">
+                <input id="id_username" name="username" type="text" required>
+                <label for="id_username">Username</label>
+            </div>
+            <div class="form-control">
+                <input type="password" name="password" id="id_password" required>
+                <label  for="id_password">Password</label>
+            </div>
+            <button type="submit">Sign In</button>
+            <div class="form-help"> 
+                <div class="remember-me">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                <a href="#">Need help?</a>
+            </div>
+            </form>
+            <p>New to HealtHive? <a href="#">Sign up now</a></p>
+        </div> 
+
 {% endblock %}

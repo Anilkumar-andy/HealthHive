@@ -42,15 +42,31 @@
     <div>
         {% if messages %}
           {% for message in messages%}
-          <p>
-            {{message}}
-          </p>
+            {% if message.tags == "success" %} 
+              <div class=" mx-auto alert alert-success  ">
+                {{message}}
+              </div>
+            {%endif%}
+            {% if message.tags == "error" %} 
+              <div class="alert alert-danger">
+                {{message}}
+              </div>
+            {%endif%}
+            {% if message.tags == "warning"%}
+            <div class="alert alert-warning">
+              {{message}}
+            </div>
+            {%endif%}
           {% endfor %}
         {% endif %}
     </div>
+
+
     
       {% include 'navbar.html' %}
 
+
+      
     
       {% block content %}
       {% endblock %}
