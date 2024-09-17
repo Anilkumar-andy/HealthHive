@@ -21,7 +21,7 @@ views for the TRAINER adding data
 class Add_video(TrainerRequiredMixin,View):
     def get(self,request):
         form=Video_form()
-        return render(request ,'data/add_video.html',{'form': form})
+        return render(request ,'data/add.html',{'form': form})
     def post(self,request):
         username = request.session.get('username')
         print(username)
@@ -57,7 +57,7 @@ class Add_image(TrainerRequiredMixin,View):
 class Video_review(PlatformUserRequiredMixin,View):
     def get(self,request,video_id):
         form=VideoReview_form()
-        return render(request,'data/add_review.html',{'form':form})
+        return render(request,'data/add.html',{'form':form})
     def post(self,request,video_id):
         form=VideoReview_form(request.POST)
         username = request.session.get('username')
@@ -86,7 +86,6 @@ class Custom_plans(TrainerRequiredMixin,View):
                 custom_plans_instance.save()
                 return render(request,'data/success.html')
             except IntegrityError as e:
-                # print(e)
                 error_message=(
                     f'custom plan for User trainer {form.cleaned_data.get("uploaded_for_user")} of {form.cleaned_data.get("from_date")} to {form.cleaned_data.get("to_date")} already exists. Please choose another date range'
                 )

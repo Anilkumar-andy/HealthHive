@@ -44,7 +44,7 @@ body {
     
 }
 .form-center input, .form-center select, .form-center textarea {
-    width:50%; /* Makes input fields cover 70% of the form's width */
+    width:100%; /* Makes input fields cover 70% of the form's width */
     margin-bottom: 15px; /* Adds space between form elements */
     padding: 10px;
     border: 1px solid #ccc;

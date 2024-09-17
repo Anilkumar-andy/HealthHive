@@ -15,7 +15,7 @@ def homepage(request):
         'videos':videos_title,
         'images':images_title,                  
     }
-    return render(request,'base.html',data)#,context=data)
+    return render(request,'home/home.html',data)#,context=data)
 
 def important_links(request):
     return render(request,'home/links.html')
