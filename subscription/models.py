@@ -37,7 +37,7 @@ class SubscribedTrainer(models.Model):
     subscription_status = models.CharField(choices=subscription_status_choices,max_length=50,default='Pending')
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['trainer','plan','subscription_status'],name='unique_date_subscription_trainer')
+            models.UniqueConstraint(fields=['trainer','plan','subscription_status','subscription_date'],name='unique_date_subscription_trainer')
         ]
     def __str__(self):
         return f'{self.trainer.user.username} is subscribed to {self.plan.name} plan'

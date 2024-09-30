@@ -19,9 +19,11 @@ body{
         box-shadow: 0 4px 8px #FFC017;
         overflow: hidden;
         .video_player {
-            width: 100%; /* Video stretches to full width of its card */
-            height: auto; /* Maintain aspect ratio */
-        }
+            height: 200px; /* Maintain aspect ratio */
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Maintain a 16:9 ratio */
+            object-fit: cover;
+        }   
         .card-body {
             padding: 15px;
             text-align: center;
@@ -51,6 +53,10 @@ body{
             background-color: rgb(131, 129, 9);
             color: white;
         }
+        .custom-video-button-container {
+            display: flex;
+            justify-content: space-evenly;
+          }
         
     }
     

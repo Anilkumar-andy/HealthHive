@@ -9,7 +9,7 @@
     <p>Duration:-{{subscriber_info.plan.get_duration_display}}</p>
     <P>Payment Mode:-Razor pay</P>
     <form method="post" action="{% url 'buy_subscription' subscriber_info.plan.id %}">
-        {% csrf_token %}
+        {% csrf_token %}    
         <button type="submit">Pay with Razor Pay</button>
     </form>
 

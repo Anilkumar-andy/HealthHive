@@ -5,6 +5,7 @@ from .forms import *
 from .models import Trainer,PlatformUser
 from django.views import View
 from django.contrib import messages 
+from subscription.models import SubscribedTrainer
 from django.contrib.auth import authenticate,login,logout
 
 
@@ -27,6 +28,7 @@ def register(request):
 def registerTrainerData(request,username):
     print(username)
     if request.method == "GET":
+        # trainer_status = get
         form = TrainerDataForm()
         return render(request,'account/RegistrationForm.html',{'form':form})
     elif request.method == "POST": 

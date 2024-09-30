@@ -7,7 +7,12 @@
 <div class="form-container mx-auto">
     <form class="form-center" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+
         {{form.as_p}}
+        {{form.pricing.label}}
+        {% if sub_status.status == "Active" and sub_status.plan == "Standard plan" %}
+        {{ form.pricing }}
+        {% endif %}
         <button type="submit" class="submit-btn btn btn-warning " >Submit</button>
     </form>
 </div>

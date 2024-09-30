@@ -1,14 +1,35 @@
 {% extends "base.html" %}
+
+{% load static %}
+
+{% block add_css %}
+<link href="{% static 'data\css\add_.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
-<h2>Add Review</h2>
+<div class="form-container mx-auto">
+    <form class="form-center" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="submit-btn btn btn-warning " >Submit</button>
+        <p id="error-message" style="color: red;"></p>
+    </form>
+</div>
 
-<form id="dateRangeForm" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p id="error-message" style="color: red;"></p> <!-- Moved error-message inside form -->
-    <button type="submit">Submit</button>
-</form>
 
+
+{% if video_review %}
+<div class="form-container mx-auto">
+    <h1>Video Review</h1>
+{% for review in video_review %}
+        <div class="review_user">
+            <h2>{{review.user}}</h2>
+            <h5>{{review.created_at}}</h5>
+            <label>{{review.review}}</label>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 {% endblock %}

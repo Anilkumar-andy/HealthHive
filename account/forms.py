@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from subscription.models import SubscribedTrainer
 
 
 def CreateUser(form):

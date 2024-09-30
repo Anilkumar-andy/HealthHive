@@ -29,11 +29,24 @@ class BuySubscription(TrainerRequiredMixin,View):
         trainer_instance= get_object_or_404(Trainer,user=request.user)
         plan_instance= get_object_or_404(SubscriptionPlanTrainer,id=plan_id)
         print("===================>",trainer_instance)
-        subscriber_info, created = SubscribedTrainer.objects.get_or_create(
-        trainer=trainer_instance,
-        plan=plan_instance,
-        defaults={'subscription_status': 'Pending'}  
-        )
+        
+        subscriber_info=SubscribedTrainer.objects.filter(trainer=trainer_instance,plan=plan_instance)
+        for sub in subscriber_info:
+            
+            if sub.subscription_status == 'Active':
+                message.warning(request, 'Subscription already exist & its active')
+                created = False
+                print(f"====================>data from get oe create    trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{sub} \n created:{created}")
+                return trainer_instance,plan_instance,sub,created
+            elif sub.subscription_status == 'Pending':
+                created = False
+                print(f"====================>data from get oe create    trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{sub} \n created:{created}")
+                return trainer_instance,plan_instance,sub,created
+            else:
+                sub = SubscribedTrainer.objects.create(trainer=trainer_instance,plan=plan_instance,subscription_status='Pending')
+                created = True
+                print(f"====================>data from get oe create    trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{sub} \n created:{created}")
+                return trainer_instance,plan_instance,subscriber_info,created
         return trainer_instance,plan_instance,subscriber_info,created
         
     def get(self,request,plan_id):
@@ -45,6 +58,8 @@ class BuySubscription(TrainerRequiredMixin,View):
         data = self.get_or_create_subscription_data(request,plan_id)
         
         trainer_instance,plan_instance,subscriber_info,created = data
+        
+        print(f"====================>data from get     trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{subscriber_info} \n created:{created}")
         
         if created:
             message.success(request, 'Subscription created successfully')
@@ -125,3 +140,6 @@ def success(request):
             return HttpResponseBadRequest("Signature verification failed")
     else :
         return HttpResponseBadRequest("INVALID REQUEST")
+    
+    
+    

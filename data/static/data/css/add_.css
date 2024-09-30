@@ -86,3 +86,9 @@ button.btn {
         width: 95%; /* Make it almost full width on smaller screens */
     }
 }
+
+.review_user{
+    /* border : 5px solid black; */
+    padding : 25px;
+    margin : 10px;
+}

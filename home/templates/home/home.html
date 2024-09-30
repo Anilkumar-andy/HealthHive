@@ -24,11 +24,16 @@
                 <h5 class="card-title">{{video_.id}}</h5>
                 <p class="card-text">{{video_.description}}</p>
     
-                <form method="POST" action="{% url 'save_data_video_' video_.id %}">
-                    {% csrf_token %}
-                    <button  class="btn btn-primary transparent-btn">save
-                    </button>
-                </form>
+                <div class="custom-video-button-container">
+                    <form method="POST" action="{% url 'save_data_video_' video_.id %}">
+                        {% csrf_token %}
+                        <button  class="btn btn-primary transparent-btn">save</button>
+                    </form>
+                    <a href="{% url 'video_review_' video_.id %}">
+                        <button  class="btn btn-primary transparent-btn">Reviews</button>
+                    </a>
+                </div>
+                
                 </div>
             </div>
             {% endfor %}
@@ -50,6 +55,13 @@
                         </div>
                     </div>
                 {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {% if session.is_trainer %}
+            <h2 style="color:white">trainer = {{session.is_trainer}}</h2>
+            {% elif session.is_platform_user %}
+            <h2 style="color:white">platform_user = {{session.is_platform_user}}</h2>
             {% endif %}
         </div>
 

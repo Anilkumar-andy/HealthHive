@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import Video,Image,SavedData
+from .models import Video,Image,SavedData,VideoReview
 from account.models import PlatformUser
 from account.models import Trainer
 from .forms import Video_form,Image_form,VideoReview_form,CustomPlans_form
@@ -32,7 +32,7 @@ class Add_video(TrainerRequiredMixin,View):
             video_instance = form.save(commit=False)
             video_instance.user = user
             video_instance.save()
-            return render(request,'data/success.html')
+            return redirect('/')
 
 
 
@@ -51,24 +51,10 @@ class Add_image(TrainerRequiredMixin,View):
             form_instance = form.save(commit=False)
             form_instance.user=user
             form_instance.save()
-            return render(request,'data/success.html')
+            return redirect('/')
         
         
-class Video_review(PlatformUserRequiredMixin,View):
-    def get(self,request,video_id):
-        form=VideoReview_form()
-        return render(request,'data/add.html',{'form':form})
-    def post(self,request,video_id):
-        form=VideoReview_form(request.POST)
-        username = request.session.get('username')
-        user = get_object_or_404(PlatformUser,user__username = username)
-        video =get_object_or_404(Video,id=video_id)
-        if form.is_valid():
-            form_instance=form.save(commit=False)
-            form_instance.user=user
-            form_instance.video=video
-            form_instance.save()
-            return render(request,'data/success.html')
+
 
 class Custom_plans(TrainerRequiredMixin,View):
     def get(self,request):
@@ -95,7 +81,9 @@ class Custom_plans(TrainerRequiredMixin,View):
             messages.error(request,"form is invalid, check the details")
             return render(request,'data/add.html',{'form':form})
         
-        
+
+
+
         
         
 '''
@@ -140,12 +128,8 @@ class View_Data_Image(View):
         data=search_data(request)
         return render(request,'data/all_data.html',{'data':data})
     
-class View_Detail_Video(PlatformUserRequiredMixin,View):
-    def get(self,request,video_id):
-        data=get_object_or_404(Video,id=video_id)
-        print(data.id)
-        return render(request,'data/video_detail.html',{'data':data})
 
+        
         
 def filter_data_goals(request,goal):
     print(goal)
@@ -209,3 +193,26 @@ def saved_data_view(request):
     print('==================>  ',data)
     return render(request,'data/saved_data.html',{'data':data})
     
+
+
+class Video_review(PlatformUserRequiredMixin,View):
+    def get(self,request,video_id):
+        form=VideoReview_form()
+        
+        video_review = VideoReview.objects.filter(video__id = video_id)
+        print('=================>data from video review',video_review)
+
+        return render(request,'data/review.html',{'form':form,'video_review':video_review})
+    def post(self,request,video_id):
+        form=VideoReview_form(request.POST)
+        username = request.session.get('username')
+        user = get_object_or_404(PlatformUser,user__username = username)
+        video =get_object_or_404(Video,id=video_id)
+        if form.is_valid():
+            form_instance=form.save(commit=False)
+            form_instance.user=user
+            form_instance.video=video
+            form_instance.save()
+            return render(request,'data/success.html')
+        
+        
