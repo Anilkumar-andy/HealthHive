@@ -27,6 +27,8 @@ body {
     padding:10px 25px 0px  25px ;
 }
 
+
+
 .form-center label {
     font-size: large;
     font-family: "Nunito", sans-serif;
@@ -91,4 +93,19 @@ button.btn {
     /* border : 5px solid black; */
     padding : 25px;
     margin : 10px;
+}
+
+
+.subscription {
+    font-size: large;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-size: larger;
+    font-style: normal;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 35px;
+    color: black;
+    font-weight: 600;
 }

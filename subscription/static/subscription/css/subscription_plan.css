@@ -7,7 +7,8 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 .card_body {
-  background-color: #dff9fb;
+  background-color: black;
+  color:#FFC017;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,7 +29,8 @@ p {
   justify-content: center;
 
   .plan {
-    background-color: #fff;
+    background-color:#485256;
+    color:#FFC017;
     padding: 2.5rem;
     margin: 12px;
     border-radius: 5px;
@@ -56,6 +58,7 @@ p {
       list-style-type: none;
       text-align: left;
       li {
+        color: #fff ;
         margin: 8px;
         font-size: 16px;   /* Default text size */
         line-height: 1.5;  /* Set line height for readability */
@@ -63,6 +66,7 @@ p {
      
       
       li strong {
+        color: red;
         font-weight: bold; /* Ensure bold text is applied properly */
       }
       
@@ -86,11 +90,15 @@ p {
       width: 100%;
       padding: 12px 35px;
       margin-top: 1rem;
-      background-color: #6ab04c;
-      color: #fff;
+      background-color: black;
+      color: #FFC017;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      hover{
+        background-color: white;
+        color: black;
+      }
     }
 
     &.popular {
@@ -112,7 +120,7 @@ p {
     }
 
     &:hover {
-      box-shadow: 9px 7px 67px -28px rgba(0, 0, 0, 0.37);
+      box-shadow: 9px 7px 67px -28px #FFC017;
     }
   }
 }

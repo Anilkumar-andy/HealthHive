@@ -1,17 +1,28 @@
 {% extends "base.html" %}
 
+
+{% load static %}
+
+{% block add_css %}
+<link href="{% static 'data\css\add_.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<h2>Buy Subscription Details</h2>
-<div class="container bs-5">
-    <p>Trainer Name:- {{subscriber_info.trainer.user.username}}</p>
-    <p>Subscription Plan:- {{subscriber_info.plan.name}}</p>
-    <P>Subscription Price:-{{subscriber_info.plan.price}}</P>
-    <p>Duration:-{{subscriber_info.plan.get_duration_display}}</p>
-    <P>Payment Mode:-Razor pay</P>
-    <form method="post" action="{% url 'buy_subscription' subscriber_info.plan.id %}">
-        {% csrf_token %}    
-        <button type="submit">Pay with Razor Pay</button>
-    </form>
+<h2 style="color: #FFC017;">Buy Subscription Details</h2>
+<div class="container bs-5 text-center">
+    <div class="form-container mx-auto">
+
+        <form method="post" class="form-center" action="{% url 'buy_subscription' subscriber_info.plan.id %}">
+            {% csrf_token %}    
+            <p class="subscription">Trainer Name:- {{subscriber_info.trainer.user.username}}</p>
+            <p class="subscription">Subscription Plan:- {{subscriber_info.plan.name}}</p>
+            <P class="subscription">Subscription Price:-{{subscriber_info.plan.price}}</P>
+            <p class="subscription">Duration:-{{subscriber_info.plan.get_duration_display}}</p>
+            <P class="subscription">Payment Mode:-Razor pay</P>
+            <button type="submit" class="submit-btn btn btn-warning">Pay with Razor Pay</button>
+        </form>
+    </div>
+
 
 </div>
 {% endblock %}
