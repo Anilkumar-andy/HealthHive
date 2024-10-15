@@ -24,14 +24,25 @@
                 <label  for="id_password">Password</label>
             </div>
             <button type="submit">Sign In</button>
-            <div class="form-help"> 
-                <div class="remember-me">
-                    <input type="checkbox" id="remember-me">
-                    <label for="remember-me">Remember me</label>
-                </div>
-                <a href="#">Need help?</a>
+            <div class="form-help" id="forgot-password-link"> 
+               
+               
             </div>
             </form>
+            <script>
+                document.getElementById('id_username').addEventListener('input', function() {
+                    const username = this.value;
+                    const linkElement = document.getElementById('forgot-password-link');
+                    
+                    // Assuming the base URL for reset_password is something like '/reset_password/'
+                    const baseURL = '/account/forgot_password/';
+                    const url = `${baseURL}?username=${encodeURIComponent(username)}`;
+                    
+                    // Update the href attribute of the existing link
+                    linkElement.innerHTML = `<a href="${url}">Forgot Password? Reset</a>`;
+                });
+            </script>
+            
             <p>New to HealtHive? <a href="#">Sign up now</a></p>
         </div> 
 

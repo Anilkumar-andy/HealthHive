@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block add_css %}
+<link href="{% static 'account\css\register_form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="form-container mx-auto">
+    <form action="{% url 'otp_verifiaction_' %}" class="form-center" method="post" enctype="multipart/form-data">
+        <h3>
+            Enter otp
+        </h3>
+        {% csrf_token %}
+        <input type="number"  max="9999"  name = 'otp' >
+        <button type="submit" class="submit-btn btn btn-warning " >Submit</button>
+    </form>
+</div>
+{% endblock %}

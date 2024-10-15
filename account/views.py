@@ -7,6 +7,8 @@ from django.views import View
 from django.contrib import messages 
 from subscription.models import SubscribedTrainer
 from django.contrib.auth import authenticate,login,logout
+from random import randint
+
 
 
 
@@ -117,3 +119,65 @@ def logout_user(request):
     return redirect('/')
     
         
+        
+        
+################ forgot password ##################
+class ForgotPassword(View):
+    def get(self, request):
+        username = request.GET.get('username')
+        user = get_object_or_404(User,username = username )
+      
+        request.session['username']=user.username
+        
+        if user.email :
+            request.session['email']=user.email
+            return render(request,'account/email_verification.html')
+        else:
+            messages.error(request,"Can't procced with this username provided by you")
+            return redirect('Login_User_')
+    def post(self,request):
+        email=request.session.get('email')
+        user_provided_email = request.POST.get('email')
+        if user_provided_email == email:
+            print("========================>email verified successfull")
+            generate_otp(request)
+            return render(request,'account/otp_verification_page.html')
+        else:
+            messages.error(request,"Can't procced with this username provided by you")
+            return redirect('Login_User_')
+
+
+
+
+def otp_verifcation(request):
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        if otp == request.session.get('otp'):
+            return render(request,'account/reset_password.html')
+        elif  int(request.session['attempts'])>1 :
+            request.session['attempts']=str(int(request.session['attempts'])-1)
+            return render(request,'account/verify_otp.html')
+        else:
+            messages.error(request,"Something Went Wrong")
+            return redirect('login')
+
+
+def reset_password(request):
+    username = request.session['username']
+    if request.method == 'POST' and username:
+        password = request.POST.get('new_password')
+        user = get_object_or_404(User,username=username)
+        user.set_password(password)
+        print(password)
+        user.save()
+        messages.success(request,"Password Reset Successfully")
+        return redirect('Login_User_')
+    else:
+        messages.error(request, "Invalid OTP")
+        return redirect('Login_User_')
+
+def generate_otp(request):
+    otp = randint(1000,9999)
+    request.session['otp']=str(otp)
+    print(otp)
+    request.session['attempts']='3'

@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from account.mixins import PlatformUserRequiredMixin,TrainerRequiredMixin
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+
 # Create your views here.
 
 
@@ -97,8 +99,17 @@ Views for PLATFORM USER
 def search_data(request):
     search_term=request.POST.get('search_data')
     print(search_term)
-    videos_title=Video.objects.filter(title__icontains=search_term)
-    images_title=Image.objects.filter(title__icontains=search_term)
+    
+    videos_title=Video.objects.filter(
+        Q(title__icontains=search_term) |
+        Q(category__goals_provided__icontains=search_term) | 
+        Q(description__icontains=search_term)
+        )
+    images_title=Image.objects.filter(
+        Q(title__icontains=search_term) |
+        Q(category__goals_provided__icontains=search_term) | 
+        Q(description__icontains=search_term)
+        )
         
     data={
         'videos':videos_title,
