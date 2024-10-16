@@ -2,6 +2,7 @@
 {% load static %}
 {% block add_css %}
     <link href="{% static 'data\css\all_data.css' %}" rel="stylesheet">
+    <link href="{% static 'home\css\trainer_profile.css' %}" rel="stylesheet">
 {% endblock %}
 
 
@@ -55,8 +56,41 @@
                         </div>
                     </div>
                 {% endfor %}
-            {% endif %}
+            </div>
+        {% endif %}
+        
+        {% if trainer_profile  %}
+        <div class="profile_container">
+        {% for profile in trainer_profile%}
+            <div class="profile_card">
+                {% if profile.profile_image %}
+                    <img class='profile_card__image' src="{{profile.profile_image.url}}">
+                {% else %}
+                    <img  class='profile_card__image' src="{% static 'account/deafult_profile_image/profile_1.png.jpg' %}"
+                {% endif %}
+              <p class="profile_card__name">{{ profile.user.username }}</p>
+              <div class="profile_grid-container">
+          
+                <div class="profile_grid-child-posts">
+                  
+                </div>
+          
+                <div class="profile_grid-child-followers">
+                  
+                </div>
+          
+              </div>
+             
+              <a class="btn profile_draw-border" href="{% url 'trainer_profile_posts_' profile.id %}">Posts</a>              
+          
+            </div>
+        {% endfor %}
         </div>
+        
+          
+        {% endif %}
+        </div>
+
         <div>
             {% if session.is_trainer %}
             <h2 style="color:white">trainer = {{session.is_trainer}}</h2>

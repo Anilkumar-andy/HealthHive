@@ -15,4 +15,5 @@ urlpatterns = [
     path('view_saved_data/',saved_data_view,name='view_save_data_'),
     path('delete_saved_data/img/<int:image_id>/',delete_saved_data,name='delete_saved_data_image_'),
     path('delete_saved_data/video/<int:video_id>/', delete_saved_data, name='delete_saved_data_video_'),
+    path('trainer_profile_posts/<int:trainer_id>/',trainer_profile_posts,name='trainer_profile_posts_'),
 ]

@@ -85,7 +85,6 @@ class Custom_plans(TrainerRequiredMixin,View):
         
 
 
-
         
         
 '''
@@ -226,4 +225,17 @@ class Video_review(PlatformUserRequiredMixin,View):
             form_instance.save()
             return render(request,'data/success.html')
         
+@login_required
+def trainer_profile_posts(request,trainer_id):
+        trainer = get_object_or_404(Trainer,id=trainer_id)
+        videos = Video.objects.filter(user=trainer)
+        print("==============>",videos)
+        images = Image.objects.filter(user=trainer)    
+        print("==============>",images)
+        data={
+        'videos':videos,
+        'images':images,     
+    }
+        return render(request,'data/all_data.html',{'data':data})
+
         

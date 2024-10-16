@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;500&display=swap");
+
+.profile_container {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap when necessary */
+  gap: 20px; /* Space between the cards */
+  justify-content: left;
+  
+  
+}
+
+.profile_card {
+  flex: 0 0 30%; /* Each card takes up exactly 20% of the screen width */
+        margin: 10px;
+        display: inline-block;
+        flex-direction: column; /* Stack video and text vertically */
+        border: 1px solid #FFC017;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px #FFC017;
+        overflow: hidden;
+        padding: 15px;
+            text-align: center;
+}
+
+.profile_card__name {
+  font-size: 1.25rem;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.profile_card__image {
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  border: 5px solid #272133;
+  margin-top: 20px;
+  box-shadow: 0 10px 50px #ffc107;
+}
+
+
+.profile_draw-border {
+  box-shadow: inset 0 0 0 4px #58cdd1;
+  color: #58afd1;
+  -webkit-transition: color 0.25s 0.0833333333s;
+  transition: color 0.25s 0.0833333333s;
+  position: relative;
+}
+
+.profile_draw-border::before,
+.profile_draw-border::after {
+  border: 0 solid transparent;
+  box-sizing: border-box;
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  width: 0rem;
+  height: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.profile_draw-border::before {
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+}
+
+.profile_draw-border::after {
+  border-top-width: 4px;
+  border-right-width: 4px;
+}
+
+.profile_draw-border:hover {
+  color: #ffe593;
+}
+
+.profile_draw-border:hover::before,
+.profile_draw-border:hover::after {
+  border-color: #eb196e;
+  -webkit-transition: border-color 0s, width 0.25s, height 0.25s;
+  transition: border-color 0s, width 0.25s, height 0.25s;
+  width: 100%;
+  height: 100%;
+}
+
+.profile_draw-border:hover::before {
+  -webkit-transition-delay: 0s, 0s, 0.25s;
+  transition-delay: 0s, 0s, 0.25s;
+}
+
+.profile_draw-border:hover::after {
+  -webkit-transition-delay: 0s, 0.25s, 0s;
+  transition-delay: 0s, 0.25s, 0s;
+}
+
+.profile_btn {
+  padding: 10px 20px;
+            background-color:#FFC017;
+            color: black;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+}
+
+.profile_btn:focus {
+  outline: 2px dotted #55d7dc;
+}
+
+
+
+.profile_grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  font-size: 1.2em;
+}
