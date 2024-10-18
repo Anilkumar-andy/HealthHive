@@ -20,34 +20,33 @@ class SubscriptionPlan(TrainerRequiredMixin,View):
 
 class BuySubscription(TrainerRequiredMixin,View):
     
-    def get_or_create_subscription_data(self,request,plan_id):
+    def get_or_create_subscription_data(self, request, plan_id):
         """
-        
-        This method is use to get or create subscription if doesn't exist one based on plan & status of subscription  
-        
+        This method is used to get or create a subscription if one doesn't exist based on the plan & status of subscription.
         """
-        trainer_instance= get_object_or_404(Trainer,user=request.user)
-        plan_instance= get_object_or_404(SubscriptionPlanTrainer,id=plan_id)
-        print("===================>",trainer_instance)
+        trainer_instance = get_object_or_404(Trainer, user=request.user)
+        plan_instance = get_object_or_404(SubscriptionPlanTrainer, id=plan_id)
+        print("===================>", trainer_instance)
         
-        subscriber_info=SubscribedTrainer.objects.filter(trainer=trainer_instance,plan=plan_instance)
+        subscriber_info = SubscribedTrainer.objects.filter(trainer=trainer_instance, plan=plan_instance)
+        
         for sub in subscriber_info:
-            
             if sub.subscription_status == 'Active':
-                message.warning(request, 'Subscription already exist & its active')
+                message.warning(request, 'Subscription already exists & is active')
                 created = False
-                print(f"====================>data from get oe create    trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{sub} \n created:{created}")
-                return trainer_instance,plan_instance,sub,created
+                print(f"====================> data from get or create: trainer_instance: {trainer_instance} \n plan_instance: {plan_instance} \n subscriber_info: {sub} \n created: {created}")
+                return trainer_instance, plan_instance, sub, created
             elif sub.subscription_status == 'Pending':
                 created = False
-                print(f"====================>data from get oe create    trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{sub} \n created:{created}")
-                return trainer_instance,plan_instance,sub,created
-            else:
-                sub = SubscribedTrainer.objects.create(trainer=trainer_instance,plan=plan_instance,subscription_status='Pending')
-                created = True
-                print(f"====================>data from get oe create    trainer_instance:{trainer_instance} \n plan_instance:{plan_instance} \n subscriber_info:{sub} \n created:{created}")
-                return trainer_instance,plan_instance,subscriber_info,created
-        return trainer_instance,plan_instance,subscriber_info,created
+                print(f"====================> data from get or create: trainer_instance: {trainer_instance} \n plan_instance: {plan_instance} \n subscriber_info: {sub} \n created: {created}")
+                return trainer_instance, plan_instance, sub, created
+
+        # If no active or pending subscription is found, create a new one
+        sub = SubscribedTrainer.objects.create(trainer=trainer_instance, plan=plan_instance, subscription_status='Pending')
+        created = True
+        print(f"====================> data from get or create: trainer_instance: {trainer_instance} \n plan_instance: {plan_instance} \n subscriber_info: {sub} \n created: {created}")
+        return trainer_instance, plan_instance, sub, created
+
         
     def get(self,request,plan_id):
         """
@@ -123,6 +122,7 @@ def success(request):
             Subscriber_info.subscription_status = 'Active'
             Subscriber_info.subscription_date = datetime.now()
             Subscriber_info.termination_date = datetime.now() + timedelta(days=30)
+            
             
             
             payment_instance = PaymentRecord.objects.create(

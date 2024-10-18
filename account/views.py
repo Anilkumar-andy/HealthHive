@@ -65,7 +65,7 @@ def platformUserData(request,username):
 
     if request.method == 'GET':
         form = PlatformUserDataForm()
-        return render(request,'account/RegistrationForm .html',{'form':form})
+        return render(request,'account/RegistrationForm.html',{'form':form})
     elif request.method == "POST":
         form = PlatformUserDataForm(request.POST)
         print(form)
